@@ -6,7 +6,12 @@ if [ "${1:0:1}" = '-' ]; then
 fi
 
 if [ "$1" = 'nginx' ]; then
-  gomplate < /index.html.tmpl > $WEBROOT/index.html
+  if [ -f /tmpl/index.html.tmpl ]; then
+    gomplate < /tmpl/index.html.tmpl > $WEBROOT/index.html
+  else
+    gomplate < /index.html.tmpl > $WEBROOT/index.html
+  fi
+
   if [ -z "$DEV_MODE" ]; then
     if [ -f /slides.md.tmpl ]; then
       gomplate < /slides.md.tmpl > $WEBROOT/slides.md
